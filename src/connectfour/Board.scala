@@ -1,6 +1,6 @@
 package connectfour
 
-class Board(width: Int, height: Int) {
+class Board(val width: Int, val height: Int) {
   val xTile = 'X'
   val oTile = 'O'
   val emptyTile = ' '
@@ -55,15 +55,22 @@ class Board(width: Int, height: Int) {
     tileAt(column, height - 1) == emptyTile
   }
 
-  def copyBoard: Board = { this }
+  def copyBoard: Board = {
+    val b = new Board(width, height)
+    b.setAllTiles(tiles)
+    return b
+  }
+
+  def setAllTiles(toCopy: Array[Array[Char]]): Unit = {
+    tiles = toCopy.map(_.clone)
+  }
 
   def placeTile(column: Int, tile: Char): Move = {
     val row = findTopEmptyRow(column)
     if (row > -1) {
       tiles(column)(row) = tile
       val won = checkForWinAt(column, row)
-      val move = new Move(this.copyBoard, column, row, won, tile)
-      return move
+      return new Move(copyBoard, column, row, won, tile)
     } else {
       return null
     }
