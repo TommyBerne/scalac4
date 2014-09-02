@@ -2,7 +2,7 @@ package connectfour
 
 object Game extends App {
   var board = new Board(10, 10)
-  val players = Array(new Human(board.xTile ), new Human(board.oTile))
+  val players = Array(new Human(board.xTile ), new ComputerPlayer(board.oTile))
 
   def printBoard = {
     for (y <- board.getHeight to -1 by -1) {

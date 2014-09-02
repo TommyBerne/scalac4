@@ -19,12 +19,10 @@ class Board(val width: Int, val height: Int) {
   def checkForWinAt(column: Int, row: Int): Boolean = {
     val playerTile = tileAt(column, row)
     def checkByIncrement(inc: (Int, Int)): Boolean = {
-      println("checking by in:" + inc)
       var line = 0
       for (i <- -winningLineSize to winningLineSize) {
         val x = column + i * inc._1
         val y = row + i * inc._2
-        println("checking [" + x + "," + y + "] in case " + tileAt(x, y) + "==" + playerTile + " line is" + line)
         if (tileAt(x, y) == playerTile) {
           line += 1
           if (line == winningLineSize)
@@ -33,7 +31,6 @@ class Board(val width: Int, val height: Int) {
           line = 0
         }
       }
-      println("returning false")
       return false
     }
     val vertical = (0, 1)
