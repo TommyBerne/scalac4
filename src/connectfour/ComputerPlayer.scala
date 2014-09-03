@@ -1,13 +1,21 @@
 package connectfour
 
+import scala.util.Random
+
 class ComputerPlayer(tile: Char) extends Player {
   val SEARCH_DEPTH = 5
 
   def makeMove(board: Board): Int = {
-    findBestMove(board, tile, SEARCH_DEPTH).col
+    println("Computer is thinking...")
+    val col = findBestMove(board, tile, SEARCH_DEPTH).col
+    println("Computer is moving to column " + col)
+    return col
   }
 
-  def scoreWithHeuristic(move: Move): Int = 0
+  def scoreWithHeuristic(move: Move): Int = {
+    val r = new Random()
+    r.nextInt(5000)
+  }
 
   def findBestMove(board: Board, tile: Char, depthToGo: Int): Move = {
     val SCORE_INVALID = Int.MinValue
@@ -18,7 +26,7 @@ class ComputerPlayer(tile: Char) extends Player {
     * + depthToGo   : so that soon wins are better than distant ones
     * -SEARCH_DEPTH : so that +depthToGo doesn't cause overflow
     */
-    
+
     val nextPlayerTile = { if (tile == board.xTile) board.oTile else board.xTile }
 
     var bestMove = new Move(null, -1, -1, false, board.emptyTile)
